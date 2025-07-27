@@ -1,70 +1,107 @@
-<<<<<<< HEAD
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 🔥 Laravel Firebase Task Viewer
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+This is a **Laravel 10** project that integrates **Firebase Authentication** and **Firestore** with a MySQL database to display user-specific tasks. Authenticated users can log in via Firebase (email/password) and view tasks assigned to them from Firestore in a dynamic, responsive UI.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 🚀 Features
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- 🔐 Firebase Authentication (Email/Password)
+- 📦 Firestore for storing tasks
+- 💾 MySQL integration for user roles and metadata
+- ⚙️ AJAX-based task loading using jQuery
+- 📋 Protected routes using Laravel middleware
+- 🎨 Clean and responsive Bootstrap-based UI
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## 📁 Folder Structure
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+firebase-task-viewer/
+├── app/
+├── public/
+├── resources/
+│ └── views/
+│ ├── login.blade.php
+│ └── dashboard.blade.php
+├── routes/
+│ └── web.php
+├── database/
+│ ├── migrations/
+│ └── seeders/
+├── .env
+└── README.md
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+yaml
+Copy
+Edit
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+---
 
-## Laravel Sponsors
+## 🛠️ Setup Instructions
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+Follow the steps below to set up and run the project:
 
-### Premium Partners
+### 1. Clone the Repository
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+```bash
+git clone https://github.com/Bhaskar1308/firebase-task.git
+cd firebase-task
+2. Install Dependencies
+composer install
+npm install && npm run dev
+3. Configure .env
+Copy the .env.example to .env:
 
-## Contributing
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+cp .env.example .env
+Update the following variables:
+env
+APP_NAME=FirebaseTaskViewer
+APP_URL=http://localhost:8000
 
-## Code of Conduct
+DB_DATABASE=your_db_name
+DB_USERNAME=root
+DB_PASSWORD=
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+FIREBASE_API_KEY=your_firebase_api_key
+FIREBASE_AUTH_DOMAIN=your_project.firebaseapp.com
+FIREBASE_PROJECT_ID=your_project_id
+🔐 Firebase credentials should also be configured in public/js/firebase.js.
 
-## Security Vulnerabilities
+4. Generate Application Key
+php artisan key:generate
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+5. Run Migrations and Seeder
 
-## License
+php artisan migrate --seed
+🧩 Users Table Structure (MySQL)
+The users table is used to store extra metadata about Firebase-authenticated users.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
-=======
-# firebase-task
->>>>>>> fe662ccb6a940a9538aeb5e65c8eec61ac0b1239
+Field	Type	Description
+id	BIGINT	Primary key (auto increment)
+user_id	STRING	Firebase UID
+name	STRING	Full name
+email	STRING	Email address
+role	ENUM	admin, user, or viewer
+created_at	TIMESTAMP	Laravel default
+updated_at	TIMESTAMP	Laravel default
+
+🔥 Firestore Structure
+Collection: tasks
+
+Each document:
+
+user_id (Firebase UID)
+
+title
+
+description
+
+status (e.g., pending, completed)
+
+due_date
+
+🧪 How to Run the Project
+php artisan serve
+Visit: http://localhost:8000
